@@ -19,6 +19,16 @@ var Theme = StyleSheet.create({
 		justifyContent: 'center'
 	},
 
+	buttonFullWidth: {
+		backgroundColor: '#FF0094',
+		borderRadius: 10,
+		padding: 10,
+		flex: 1,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+
 	buttonText: {
 		color: '#FFFFFF',
 		fontSize: 18

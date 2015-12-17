@@ -7,21 +7,19 @@ var {
 } = React;
 
 
-var PostTheme = StyleSheet.create({
+var ProfileTheme = StyleSheet.create({
 	scrollContainer: {
 		flex: 1
 	},
 
 	container: {
 		padding: 15,
-		marginTop: 60,
 		flex: 1
 	},
 
 	header: {
 		flex: 1,
 		flexDirection: 'row',
-		marginBottom: 10,
 		flexWrap: 'wrap'
 	},
 
@@ -32,11 +30,15 @@ var PostTheme = StyleSheet.create({
 		top: 3
 	},
 
+	infoWrapper: {
+		marginTop: 10
+	},
+
 	user: {
-		fontSize: 18,
+		fontSize: 22,
 		color: '#000000',
 		marginRight: 7,
-		marginBottom: 10
+		fontWeight: 'bold'
 	},
 
 	profilePic: {
@@ -46,32 +48,43 @@ var PostTheme = StyleSheet.create({
 		marginRight: 10
 	},
 
-	title: {
-		fontSize: 30,
-		fontWeight: 'bold',
-		color: '#333333'
-	}, 
-
-	content: {
-		marginBottom: 20,
-		flex: 1
+	badges: {
+		flex: 1,
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		marginBottom: 5,
+		marginLeft: 40
 	},
 
-	bodyWrapper: {
+	badge: {
+		height: 20,
+		width: 20,
+		resizeMode: 'contain',
+		marginRight: 10
+	},
+
+	posts: {
 		flex: 1,
 		marginBottom: 10,
-		backgroundColor: '#FF00FF'
+		marginTop: 20
 	},
 
-	body: {
-		resizeMode: 'contain',
-		flex: 1
-	},
-
-	loadMore: {
+	post: {
 		flex: 1,
-		marginTop: 20,
-		padding: 10
+		flexDirection: 'row',
+		marginBottom: 20
+	},
+
+	postTitle: {
+		fontSize: 18,
+		color: '#333333'
+	},
+
+	postBody: {
+		resizeMode: 'contain',
+		height: 40,
+		width: 40,
+		marginRight: 10
 	},
 
 	loadingContainer: {
@@ -112,4 +125,4 @@ var PostTheme = StyleSheet.create({
 	}
 });
 
-module.exports = PostTheme;
+module.exports = ProfileTheme;

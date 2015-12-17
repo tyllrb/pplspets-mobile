@@ -2,6 +2,7 @@
 
 var React = require('react-native'),
 	Post  = require('./Post'),
+	Profile = require('./Profile'),
 
 	Dimensions = require('Dimensions'),
 	
@@ -58,7 +59,7 @@ class PostList extends Component {
 		var self = this;
 		
 		self.setState({isLoading: true, hasErrors: false}, function () {
-			PostModel.downloadPosts(10).then(function () {
+			PostModel.downloadPosts(2).then(function () {
 				var posts = PostModel.getPosts();
 
 				$.forEach(posts, _processComment, function () {
@@ -109,6 +110,22 @@ class PostList extends Component {
 		});
 	}
 
+	_openProfile (profileId) {
+		console.log("Open profile -- " + profileId);
+
+		this.props.navigator.push({
+			title: 'Profile',
+			component: Profile,
+			passProps: {
+				'profileId': 'any'
+			}
+		});
+	}
+
+	loadOlderPosts () {
+
+	}
+
 	render () {
 		var windowSize = Dimensions.get('window');
 
@@ -136,7 +153,11 @@ class PostList extends Component {
 							return (
 								<View style={PostTheme.container}>
 									<View style={PostTheme.header}>
-										<Image style={PostTheme.profilePic} source={{uri: Server.apiUrl + 'images/default.jpg'}} />
+										<TouchableHighlight underlayColor="#FF0094" onPress={() => {
+											this._openProfile();
+										}}>
+											<Image style={PostTheme.profilePic} source={{uri: Server.apiUrl + 'images/default.jpg'}} />
+										</TouchableHighlight>
 
 										<Text style={PostTheme.user}>
 											{post.data.user.username}
@@ -190,6 +211,12 @@ class PostList extends Component {
 								</View>
 							);
 						})}
+
+						<View style={PostTheme.loadMore}>
+							<View style={Theme.buttonFullWidth} onClick={this.loadOlderPosts()}>
+								<Text style={Theme.buttonText}>Load older</Text>
+							</View>
+						</View>
 					</ScrollView>
 				);
 		}
