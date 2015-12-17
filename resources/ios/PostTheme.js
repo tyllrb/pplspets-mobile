@@ -1,4 +1,4 @@
-'use strict';
+	'use strict';
 
 var React = require('react-native');
 
@@ -13,8 +13,9 @@ var PostTheme = StyleSheet.create({
 	},
 
 	container: {
-		padding: 20,
-		marginTop: 60
+		padding: 15,
+		marginTop: 60,
+		flex: 1
 	},
 
 	header: {
@@ -34,7 +35,8 @@ var PostTheme = StyleSheet.create({
 	user: {
 		fontSize: 18,
 		color: '#000000',
-		marginRight: 7
+		marginRight: 7,
+		marginBottom: 10
 	},
 
 	profilePic: {
@@ -56,7 +58,9 @@ var PostTheme = StyleSheet.create({
 	},
 
 	bodyWrapper: {
-		height: 300
+		flex: 1,
+		marginBottom: 10,
+		backgroundColor: '#FF00FF'
 	},
 
 	body: {

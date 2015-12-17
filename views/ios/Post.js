@@ -2,12 +2,16 @@
 
 var React = require('react-native'),
 
+	Dimensions = require('Dimensions'),
+
 	Theme = require('./../../resources/ios/theme'),
 	PostTheme = require('./../../resources/ios/PostTheme'),
 	CommentTheme = require('./../../resources/ios/CommentTheme'),
 
 	PostModel = require('./../../models/Post'),
-	CommentModel = require('./../../models/Comment');
+	CommentModel = require('./../../models/Comment'),
+
+	Server = require('./../../server');
 
 
 var {
@@ -33,8 +37,6 @@ class Post extends Component {
 	componentWillMount() {
 		var self = this;
 
-		console.log(this.props.postId);
-
 		if (!this.props.postId) {
 			self.setState({
 				hasError: true,
@@ -48,9 +50,7 @@ class Post extends Component {
 				var post = PostModel.getPost();
 
 				CommentModel.downloadThread(self.props.postId, 20).then(function () {
-					var comments = CommentModel.getComments();
-
-					console.log("Done getting posts and comments");
+					var comments = CommentModel.getComments(self.props.postId);
 
 					self.setState({
 						isLoading: false,
@@ -79,9 +79,14 @@ class Post extends Component {
 		*/	
 	}
 
+	imageSizer(event) {
+		console.log(event);
+	}
+
 	render () {
-		console.log("RENDERING the post");
-		console.log(this.state);
+		var windowSize = Dimensions.get('window');
+		//console.log("RENDERING the post =" + windowSize.width + ", " + windowSize.height);
+		//console.log(this.state);
 
 		/* Loading state of the view */
 		if (this.state.isLoading) {
@@ -104,34 +109,11 @@ class Post extends Component {
 
 		/* Render the post contents */
 		else {
-			/* Build up the comments views if there are any */
-			var commentViews = [];
-
-			if (this.state.comments) {
-				for (var i = 0; i < this.state.comments.length; i++) {
-					commentViews.push(
-						<View style={CommentTheme.comment}>
-							<View style={CommentTheme.header}>
-								<Image style={CommentTheme.profilePic} source={{uri: 'http://192.168.0.20:1999/' + this.state.comments[i].user.pic}} />
-
-								<Text style={CommentTheme.user}>{this.state.comments[i].user.username}</Text>
-							</View>
-
-							<View style={CommentTheme.body}>
-								<Text style={CommentTheme.text}>{this.state.comments[i].body}</Text>
-
-								<Text style={CommentTheme.date}>a few hours ago</Text>
-							</View>
-						</View>
-					);
-				}
-			}
-
 			return (
 				<ScrollView style={PostTheme.scrollContainer}>
 					<View style={PostTheme.container}>
 						<View style={PostTheme.header}>
-							<Image style={PostTheme.profilePic} source={{uri: 'http://192.168.0.20:1999/images/default.jpg'}} />
+							<Image style={PostTheme.profilePic} source={{uri: Server.apiUrl + 'images/default.jpg'}} />
 
 							<Text style={PostTheme.user}>
 								{this.state.data.user.username}
@@ -145,7 +127,7 @@ class Post extends Component {
 						<View style={PostTheme.content}>
 							<Text style={PostTheme.title}>{this.state.data.title}</Text>
 
-							<View style={PostTheme.bodyWrapper}>
+							<View style={{height: Math.round(this.state.data.ratio*(windowSize.width - 20)), flex: 1, marginBottom: 10}}>
 								<Image style={PostTheme.body} source={{uri: this.state.data.content}} />
 							</View>
 
@@ -160,7 +142,23 @@ class Post extends Component {
 								<TextInput style={CommentTheme.input} placeholder="Say something..." />
 							</View>
 
-							{commentViews}
+							{this.state.comments.map(function(comment) {
+								return (
+									<View style={CommentTheme.comment}>
+										<View style={CommentTheme.header}>
+											<Image style={CommentTheme.profilePic} source={{uri: Server.apiUrl + comment.user.pic}} />
+
+											<Text style={CommentTheme.user}>{comment.user.username}</Text>
+										</View>
+
+										<View style={CommentTheme.body}>
+											<Text style={CommentTheme.text}>{comment.body}</Text>
+
+											<Text style={CommentTheme.date}>{comment.date}</Text>
+										</View>
+									</View>
+								);
+							})}
 						</View>
 					</View>
 				</ScrollView>

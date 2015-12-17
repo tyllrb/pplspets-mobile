@@ -1,3 +1,5 @@
+Server = require('./../server.js');
+
 PostModel = (function () {
 
 	/* List of posts */
@@ -10,7 +12,7 @@ PostModel = (function () {
 	var post = null;
 
 	/* API server location */
-	var API_SERVER = 'http://192.168.0.20:1999';
+	var API_SERVER = 'http://192.168.1.35:1999';
 
 	function processDate (timestamp) {
 		var rightNow  = parseInt(Date.now() / 1000);

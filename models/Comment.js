@@ -1,3 +1,5 @@
+Server = require('./../server.js');
+
 CommentModel = (function () {
 
 	/* List of current comments */
@@ -7,7 +9,7 @@ CommentModel = (function () {
 	var page = 0;
 
 	/* API server location */
-	var API_SERVER = 'http://192.168.0.20:1999';
+	var API_SERVER = 'http://192.168.1.35:1999';
 
 	/* Process the time/date routines */
 	function processDate (timestamp) {
@@ -62,6 +64,8 @@ CommentModel = (function () {
 
 	return {
 		downloadThread: function (postId, amount) {
+			comments [postId] = [];
+
 			return new Promise (
 				function (resolve, reject) {
 					fetch(
@@ -73,10 +77,10 @@ CommentModel = (function () {
 					})
 					.then(function (data) {
 						comments [postId] = data.comments;
-						/*.map(function (value) {
+						comments.map(function (value) {
 							value.date = processDate(value.published);
 							return value;
-						});*/
+						});
 
 						resolve();
 					})

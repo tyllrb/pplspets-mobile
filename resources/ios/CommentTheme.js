@@ -8,11 +8,13 @@ var {
 
 var CommentTheme = StyleSheet.create({
 	container: {
-		backgroundColor: '#eeeeee'
+		backgroundColor: '#eeeeee',
+		flex: 1
 	},
 
 	postComment: {
-		padding: 10
+		padding: 10,
+		flex: 1
 	},
 
 	input: {
