@@ -4,6 +4,8 @@ var React = require('react-native'),
 	Post  = require('./Post'),
 	Profile = require('./Profile'),
 
+	AccountModel = require('./../../models/Account'),
+
 	Dimensions = require('Dimensions'),
 	
 	PostModel = require('./../../models/Post'),
@@ -72,7 +74,6 @@ class PostList extends Component {
 				});
 			})
 			.catch(function (error) {
-				console.log(error);
 				self.setState({
 					hasErrors: true,
 					errorMessage: error.message,
@@ -99,8 +100,6 @@ class PostList extends Component {
 	}
 
 	_openPost (postId) {
-		console.log("Open new post -- " + postId);
-
 		this.props.navigator.push({
 			title: 'Post',
 			component: Post,
@@ -111,8 +110,6 @@ class PostList extends Component {
 	}
 
 	_openProfile (profileId) {
-		console.log("Open profile -- " + profileId);
-
 		this.props.navigator.push({
 			title: 'Profile',
 			component: Profile,
@@ -149,68 +146,70 @@ class PostList extends Component {
 		else {
 				return (
 					<ScrollView style={PostTheme.scrollContainer}>
-						{this.state.data.map((post) => {
-							return (
-								<View style={PostTheme.container}>
-									<View style={PostTheme.header}>
-										<TouchableHighlight underlayColor="#FF0094" onPress={() => {
-											this._openProfile();
-										}}>
-											<Image style={PostTheme.profilePic} source={{uri: Server.apiUrl + 'images/default.jpg'}} />
-										</TouchableHighlight>
+						<View style={PostTheme.mainContainer}>
+							{this.state.data.map((post) => {
+								return (
+									<View style={PostTheme.container}>
+										<View style={PostTheme.header}>
+											<TouchableHighlight underlayColor="#FF0094" onPress={() => {
+												this._openProfile();
+											}}>
+												<Image style={PostTheme.profilePic} source={{uri: Server.apiUrl + 'images/default.jpg'}} />
+											</TouchableHighlight>
 
-										<Text style={PostTheme.user}>
-											{post.data.user.username}
-										</Text>
+											<Text style={PostTheme.user}>
+												{post.data.user.username}
+											</Text>
 
-										<Text style={PostTheme.info}>
-											posted
-										</Text>
-									</View>
-
-									<View style={PostTheme.content}>
-										<Text style={PostTheme.title}>{post.data.title}</Text>
-
-										<TouchableHighlight underlayColor="#FF0094" onPress={() => {
-											this._openPost(post.data.postId);
-										}}>
-											<View style={{height: Math.round(post.data.ratio*(windowSize.width - 20)), flex: 1, marginBottom: 10}}>
-												<Image style={PostTheme.body} source={{uri: post.data.content}} />
-											</View>
-										</TouchableHighlight>
-
-										<View style={Theme.button}>
-											<Image style={Theme.buttonIcon} source={{uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB1ElEQVRYR81XYVnDQAx9TwE4ABQAChgOmAJAAZsChgKYApgCcABVAChgOAAF4XtHr+tK16bttpJf/b5ekpdcknshehZW+Tezk/ifZNIEq1f3DwAz2wdwDeAMwG7B6QOAGcmXMjBmNgBwDuCi8P8LwBOAG5Lz/L8lAGYmxXtHpCOS0/w5M7sCcOfQvSSpQIJkAMxsBODWYSAemZKUDsxMjgXAK2OSAWwAkKbu2audOzdMvx9b6J7qKiOADwC6+6aiu5UUa8VjZ07ygGamYmsTgcdJ3ZmhAKggVLl9yEwAXgEc9eEdQCIA1pPz3zb8DwA0mfZ6ysKnMqCxms38LQMJNTBJZ/+WfQd3YwFQB6gT+pDjOAn7uIaE5KDrW9Ala4u3QFa2XIwh+jAHYggpEXkDsNMlLIfutyZvJCZtCYnDz8oj5YQkl4lNtqUomexnUkpKN/RCiksWueKiBooJWzOIUudLRVh2Y2uakhn/K/NRuRek7am0iUA27Q5Vu9hzxoBbAUhBaFzL0KGz/N+1G5BUW1dKbQby2k76ndH1Oue1NbCiLjTBdCXFbChqpbx0a1oFplEGCtnQUhJ7ehIXDU/UtXPAa8TMwj5AMu4HXtXqQdTYSgeFH2oqqvQ3MFsgAAAAAElFTkSuQmCC'}}/>
-											<Text style={Theme.buttonText}>{post.data.awws} Awww!</Text>
-										</View>
-									</View>
-
-									<View style={CommentTheme.container}>
-										<View style={CommentTheme.postComment}>
-											<TextInput style={CommentTheme.input} placeholder="Say something..." />
+											<Text style={PostTheme.info}>
+												posted
+											</Text>
 										</View>
 
-										{post.comments.map((comment) => {
-											return (
-												<View style={CommentTheme.comment}>
-													<View style={CommentTheme.header}>
-														<Image style={CommentTheme.profilePic} source={{uri: Server.apiUrl + comment.user.pic}} />
+										<View style={PostTheme.content}>
+											<Text style={PostTheme.title}>{post.data.title}</Text>
 
-														<Text style={CommentTheme.user}>{comment.user.username}</Text>
-													</View>
-
-													<View style={CommentTheme.body}>
-														<Text style={CommentTheme.text}>{comment.body}</Text>
-
-														<Text style={CommentTheme.date}>{comment.date}</Text>
-													</View>
+											<TouchableHighlight underlayColor="#FF0094" onPress={() => {
+												this._openPost(post.data.postId);
+											}}>
+												<View style={{height: Math.round(post.data.ratio*(windowSize.width - 20)), flex: 1, marginBottom: 10}}>
+													<Image style={PostTheme.body} source={{uri: post.data.content}} />
 												</View>
-											);
-										})}
+											</TouchableHighlight>
+
+											<View style={Theme.button}>
+												<Image style={Theme.buttonIcon} source={{uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB1ElEQVRYR81XYVnDQAx9TwE4ABQAChgOmAJAAZsChgKYApgCcABVAChgOAAF4XtHr+tK16bttpJf/b5ekpdcknshehZW+Tezk/ifZNIEq1f3DwAz2wdwDeAMwG7B6QOAGcmXMjBmNgBwDuCi8P8LwBOAG5Lz/L8lAGYmxXtHpCOS0/w5M7sCcOfQvSSpQIJkAMxsBODWYSAemZKUDsxMjgXAK2OSAWwAkKbu2audOzdMvx9b6J7qKiOADwC6+6aiu5UUa8VjZ07ygGamYmsTgcdJ3ZmhAKggVLl9yEwAXgEc9eEdQCIA1pPz3zb8DwA0mfZ6ysKnMqCxms38LQMJNTBJZ/+WfQd3YwFQB6gT+pDjOAn7uIaE5KDrW9Ala4u3QFa2XIwh+jAHYggpEXkDsNMlLIfutyZvJCZtCYnDz8oj5YQkl4lNtqUomexnUkpKN/RCiksWueKiBooJWzOIUudLRVh2Y2uakhn/K/NRuRek7am0iUA27Q5Vu9hzxoBbAUhBaFzL0KGz/N+1G5BUW1dKbQby2k76ndH1Oue1NbCiLjTBdCXFbChqpbx0a1oFplEGCtnQUhJ7ehIXDU/UtXPAa8TMwj5AMu4HXtXqQdTYSgeFH2oqqvQ3MFsgAAAAAElFTkSuQmCC'}}/>
+												<Text style={Theme.buttonText}>{post.data.awws} Awww!</Text>
+											</View>
+										</View>
+
+										<View style={CommentTheme.container}>
+											<View style={CommentTheme.postComment}>
+												<TextInput style={CommentTheme.input} placeholder="Say something..." />
+											</View>
+
+											{post.comments.map((comment) => {
+												return (
+													<View style={CommentTheme.comment}>
+														<View style={CommentTheme.header}>
+															<Image style={CommentTheme.profilePic} source={{uri: Server.apiUrl + comment.user.pic}} />
+
+															<Text style={CommentTheme.user}>{comment.user.username}</Text>
+														</View>
+
+														<View style={CommentTheme.body}>
+															<Text style={CommentTheme.text}>{comment.body}</Text>
+
+															<Text style={CommentTheme.date}>{comment.date}</Text>
+														</View>
+													</View>
+												);
+											})}
+										</View>
 									</View>
-								</View>
-							);
-						})}
+								);
+							})}
+						</View>
 
 						<View style={PostTheme.loadMore}>
 							<View style={Theme.buttonFullWidth} onClick={this.loadOlderPosts()}>

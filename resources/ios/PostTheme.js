@@ -12,9 +12,14 @@ var PostTheme = StyleSheet.create({
 		flex: 1
 	},
 
+	mainContainer: {
+		marginTop: 60,
+		flex: 1
+	},
+
 	container: {
 		padding: 15,
-		marginTop: 60,
+		marginTop: 30,
 		flex: 1
 	},
 
@@ -59,8 +64,7 @@ var PostTheme = StyleSheet.create({
 
 	bodyWrapper: {
 		flex: 1,
-		marginBottom: 10,
-		backgroundColor: '#FF00FF'
+		marginBottom: 10
 	},
 
 	body: {

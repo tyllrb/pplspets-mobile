@@ -5,7 +5,7 @@ var React = require('react-native'),
 
 	Dimensions = require('Dimensions'),
 	
-	PostModel = require('./../../models/Post'),
+	ProfileModel = require('./../../models/Profile'),
 	ProfileTheme = require('./../../resources/ios/ProfileTheme'),
 	Theme = require('./../../resources/ios/theme'),
 
@@ -42,7 +42,18 @@ class Profile extends Component {
 	componentWillMount () {
 		var self = this;
 		
-		PostModel
+		self.setState({isLoading: true, hasErrors: false}, () => {
+			ProfileModel.downloadPosts('uby0zg7oz7').then(() => {
+				var posts = ProfileModel.getPosts();
+
+				console.log(posts);
+
+				self.setState({isLoading: false, hasErrors: false, data: posts});
+			})
+			.catch((error) => {
+				self.setState({isLoading: false, hasErrors: true, error: error});
+			});
+		});
 	}
 
 	_openPost (postId) {
@@ -100,13 +111,17 @@ class Profile extends Component {
 							</View>
 
 							<View style={ProfileTheme.posts}>
-								<View style={ProfileTheme.post}>
-									<Image style={ProfileTheme.postBody} source={{uri: 'https://pbs.twimg.com/profile_images/378800000822867536/3f5a00acf72df93528b6bb7cd0a4fd0c.jpeg'}} />
+								{this.state.data.map((post) => {
+									return (
+										<View style={ProfileTheme.post}>
+											<Image style={ProfileTheme.postBody} source={{uri: post.content}} />
 
-									<Text style={ProfileTheme.postTitle}>
-										Here have another
-									</Text>
-								</View>
+											<Text style={ProfileTheme.postTitle}>
+												{post.title}
+											</Text>
+										</View>
+									);
+								})}
 							</View>
 						</View>
 					</ScrollView>

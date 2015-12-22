@@ -14,7 +14,8 @@ var ProfileTheme = StyleSheet.create({
 
 	container: {
 		padding: 15,
-		flex: 1
+		flex: 1,
+		marginTop: 60
 	},
 
 	header: {
@@ -66,7 +67,7 @@ var ProfileTheme = StyleSheet.create({
 	posts: {
 		flex: 1,
 		marginBottom: 10,
-		marginTop: 20
+		marginTop: 30
 	},
 
 	post: {
@@ -77,7 +78,8 @@ var ProfileTheme = StyleSheet.create({
 
 	postTitle: {
 		fontSize: 18,
-		color: '#333333'
+		color: '#333333',
+		width: 220
 	},
 
 	postBody: {
