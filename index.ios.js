@@ -37,11 +37,11 @@ class App extends Component {
 
 		/* Check to see if we need to login */
 		AccountModel.isLoggedIn().then((user) => {
-			console.log("Logged in");
+			console.log("Is logged in");
 			this.setState({user: user, isLoggedIn: true});
 		})
 		.catch((error) => {
-			console.log("Not logged in");
+			console.log("Is not logged in");
 			this.setState({user: null, isLoggedIn: false});
 		});
 	}
@@ -55,32 +55,61 @@ class App extends Component {
 
 		var userProps = (this.state.isLoggedIn) ? { 'user': this.state.user } : { 'user': null };
 
-		return (
-			<NavigatorIOS
-				ref="nav"
-				style={nav.container}
-				barTintColor="#FF0094"
-				tintColor="#FFFFFF"
-				titleTextColor="#FFFFFF"
-				initialRoute={{
-					rightButtonTitle: 'New+',
-					onRightButtonPress: () => {
-						this.refs.nav.navigator.push({
-							title: 'Create',
-							component: NewPost,
-							rightButtonTitle: 'Cancel',
-							onRightButtonPress: () => {
-								this.refs.nav.navigator.pop();
-							},
-							passProps: userProps
-						});
-					},
-					title: 'petppl',
-					component: Login,
-					passProps: userProps
-				}}
-			/>
-		);
+		if (this.state.isLoggedIn) {
+			return (
+				<NavigatorIOS
+					ref="nav"
+					style={nav.container}
+					barTintColor="#FF0094"
+					tintColor="#FFFFFF"
+					titleTextColor="#FFFFFF"
+					initialRoute={{
+						rightButtonTitle: 'New+',
+						onRightButtonPress: () => {
+							this.refs.nav.navigator.push({
+								title: 'New+',
+								component: NewPost,
+								rightButtonTitle: 'AOS',
+								onRightButtonPress: () => {
+									this.refs.nav.navigator.pop();
+								},
+								passProps: userProps
+							});
+						},
+						title: 'petppl',
+						component: PostList,
+						passProps: {'user': this.state.user}
+					}}
+				/>
+			);
+		}
+
+		else {
+			return (
+				<NavigatorIOS
+					ref="nav"
+					style={nav.container}
+					barTintColor="#FF0094"
+					tintColor="#FFFFFF"
+					titleTextColor="#FFFFFF"
+					initialRoute={{
+						rightButtonTitle: 'Login',
+						onRightButtonPress: () => {
+							this.refs.nav.navigator.push({
+								title: 'Login',
+								component: Login,
+								rightButtonTitle: 'AS',
+								onRightButtonPress: () => {
+									this.refs.nav.navigator.pop();
+								}
+							});
+						},
+						title: 'petppl',
+						component: PostList
+					}}
+				/>
+			);
+		}
 	}
 }
 

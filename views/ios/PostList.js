@@ -119,6 +119,14 @@ class PostList extends Component {
 		});
 	}
 
+	_awwPost (postId) {
+		console.log("Awwing post " + postId);
+		
+		PostModel.awwPost(postId).then(() => {
+
+		});
+	}
+
 	loadOlderPosts () {
 
 	}
@@ -177,10 +185,14 @@ class PostList extends Component {
 												</View>
 											</TouchableHighlight>
 
-											<View style={Theme.button}>
-												<Image style={Theme.buttonIcon} source={{uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB1ElEQVRYR81XYVnDQAx9TwE4ABQAChgOmAJAAZsChgKYApgCcABVAChgOAAF4XtHr+tK16bttpJf/b5ekpdcknshehZW+Tezk/ifZNIEq1f3DwAz2wdwDeAMwG7B6QOAGcmXMjBmNgBwDuCi8P8LwBOAG5Lz/L8lAGYmxXtHpCOS0/w5M7sCcOfQvSSpQIJkAMxsBODWYSAemZKUDsxMjgXAK2OSAWwAkKbu2audOzdMvx9b6J7qKiOADwC6+6aiu5UUa8VjZ07ygGamYmsTgcdJ3ZmhAKggVLl9yEwAXgEc9eEdQCIA1pPz3zb8DwA0mfZ6ysKnMqCxms38LQMJNTBJZ/+WfQd3YwFQB6gT+pDjOAn7uIaE5KDrW9Ala4u3QFa2XIwh+jAHYggpEXkDsNMlLIfutyZvJCZtCYnDz8oj5YQkl4lNtqUomexnUkpKN/RCiksWueKiBooJWzOIUudLRVh2Y2uakhn/K/NRuRek7am0iUA27Q5Vu9hzxoBbAUhBaFzL0KGz/N+1G5BUW1dKbQby2k76ndH1Oue1NbCiLjTBdCXFbChqpbx0a1oFplEGCtnQUhJ7ehIXDU/UtXPAa8TMwj5AMu4HXtXqQdTYSgeFH2oqqvQ3MFsgAAAAAElFTkSuQmCC'}}/>
-												<Text style={Theme.buttonText}>{post.data.awws} Awww!</Text>
-											</View>
+											<TouchableHighlight onPress={() => {
+												this._awwPost(post.data.postId);
+											}}>
+												<View style={Theme.button}>
+													<Image style={Theme.buttonIcon} source={{uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB1ElEQVRYR81XYVnDQAx9TwE4ABQAChgOmAJAAZsChgKYApgCcABVAChgOAAF4XtHr+tK16bttpJf/b5ekpdcknshehZW+Tezk/ifZNIEq1f3DwAz2wdwDeAMwG7B6QOAGcmXMjBmNgBwDuCi8P8LwBOAG5Lz/L8lAGYmxXtHpCOS0/w5M7sCcOfQvSSpQIJkAMxsBODWYSAemZKUDsxMjgXAK2OSAWwAkKbu2audOzdMvx9b6J7qKiOADwC6+6aiu5UUa8VjZ07ygGamYmsTgcdJ3ZmhAKggVLl9yEwAXgEc9eEdQCIA1pPz3zb8DwA0mfZ6ysKnMqCxms38LQMJNTBJZ/+WfQd3YwFQB6gT+pDjOAn7uIaE5KDrW9Ala4u3QFa2XIwh+jAHYggpEXkDsNMlLIfutyZvJCZtCYnDz8oj5YQkl4lNtqUomexnUkpKN/RCiksWueKiBooJWzOIUudLRVh2Y2uakhn/K/NRuRek7am0iUA27Q5Vu9hzxoBbAUhBaFzL0KGz/N+1G5BUW1dKbQby2k76ndH1Oue1NbCiLjTBdCXFbChqpbx0a1oFplEGCtnQUhJ7ehIXDU/UtXPAa8TMwj5AMu4HXtXqQdTYSgeFH2oqqvQ3MFsgAAAAAElFTkSuQmCC'}}/>
+													<Text style={Theme.buttonText}>{post.data.awws} Awww!</Text>
+												</View>
+											</TouchableHighlight>
 										</View>
 
 										<View style={CommentTheme.container}>

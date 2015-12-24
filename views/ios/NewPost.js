@@ -39,21 +39,6 @@ class NewPost extends Component {
 	}
 
 	componentDidMount () {
-		var self = this;
-
-		if (this.props.user !== null) {
-		}
-
-		else {
-			console.log("Need to login");
-			this.props.navigator.replace({
-				title: 'Login',
-				component: Login,
-				passProps: {
-					'previousComponent': self
-				}
-			});
-		}
 	}
 
 	createPost () {

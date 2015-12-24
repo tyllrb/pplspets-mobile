@@ -120,6 +120,25 @@ PostModel = (function () {
 
 		getPosts: function () {
 			return posts;
+		},
+
+		awwPost: function (userId) {
+			return new Promise(
+				function (resolve, reject) {
+					fetch(
+						API_SERVER + '/api/posts/' + userId + '/aww', {
+						method: 'PUT'
+					})
+					.then(function (response) {
+						console.log(response);
+						resolve();
+					})
+					.catch(function (error) {
+						console.log("ERROR");
+						reject(error);
+					})
+				}
+			);
 		}
 	}
 })();

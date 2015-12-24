@@ -111,7 +111,7 @@ class Post extends Component {
 		else {
 			return (
 				<ScrollView style={PostTheme.scrollContainer}>
-					<View style={PostTheme.container}>
+					<View style={PostTheme.mainContainer}>
 						<View style={PostTheme.header}>
 							<Image style={PostTheme.profilePic} source={{uri: Server.apiUrl + 'images/default.jpg'}} />
 

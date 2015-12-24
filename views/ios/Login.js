@@ -2,6 +2,7 @@
 
 var React = require('react-native'),
 	PostList = require('./PostList'),
+	NewPost = require('./NewPost'),
 	Dimensions = require('Dimensions'),
 	Theme = require('./../../resources/ios/theme'),
 	LoginTheme = require('./../../resources/ios/LoginTheme'),
@@ -37,25 +38,37 @@ class Login extends Component {
 	}
 
 	performLogin () {
+		console.log(this.state);
+
 		this.setState({isLoading: true, hasErrors: false}, () => {
 			var username = this.state.username;
 			var password = this.state.password;
 
 			AccountModel.doLogin (username, password).then((user) => {
-				if (this.props.previousComponent) {
-					this.props.navigator.pop();
-				}
+				var self = this;
 
-				else {
-					this.props.navigator.replace({
-						rightButtonIcon: require('./../../resources/icons/plus.png'),
-						title: 'pplspets',
-						component: PostList,
-						passProps: {
-					    	'user': user
-					  	}
-					});
-				}
+				this.props.navigator.pop();
+
+				this.props.navigator.replacePrevious({
+					rightButtonTitle: 'New+',
+					onRightButtonPress: () => {
+						self.props.navigator.push({
+							title: 'New+',
+							component: NewPost,
+							rightButtonTitle: 'Cancel',
+							onRightButtonPress: () => {
+								this.props.navigator.pop();
+							},
+							passProps: {'user': user}
+						});
+					},
+
+					title: 'pplspets',
+					component: PostList,
+					passProps: {
+				    	'user': user
+				  	}
+				});
 			})
 			.catch((error) => {
 				this.setState({isLoading: false, hasErrors: true, error: error});
@@ -86,7 +99,7 @@ class Login extends Component {
 						<TextInput 	style={LoginTheme.input} 
 									placeholder="Username / Email"
 									onChangeText={(text) => this.setState({username: text})}
-									onSubmitEditing={this.performLogin} />
+									onSubmitEditing={this.performLogin.bind(this)} />
 					</View>
 
 					<View style={LoginTheme.field}>
@@ -94,7 +107,7 @@ class Login extends Component {
 									placeholder="Password"
 									secureTextEntry='true'
 									onChangeText={(text) => this.setState({password: text})}
-									onSubmitEditing={this.performLogin} />
+									onSubmitEditing={this.performLogin.bind(this)} />
 					</View>
 
 					<View style={LoginTheme.field}>
