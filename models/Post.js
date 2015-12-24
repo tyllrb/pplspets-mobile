@@ -114,6 +114,25 @@ PostModel = (function () {
 
 		},
 
+		awwPost: function () {
+			return new Promise(
+				function (resolve, reject) {
+					fetch(
+						API_SERVER + '/api/post/' + postId + '/aww', {
+							method: 'PUT'
+					})
+					.then((response) => {
+						console.log(response);
+						resolve();
+					})
+					.catch((error) => {
+						console.log(error);
+						reject();
+					})
+				}
+			)
+		},
+
 		getPost: function () {
 			return post;
 		},
