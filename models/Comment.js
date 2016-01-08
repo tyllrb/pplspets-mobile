@@ -77,7 +77,7 @@ CommentModel = (function () {
 					})
 					.then(function (data) {
 						comments [postId] = data.comments;
-						comments.map(function (value) {
+						comments [postId] = comments [postId].map(function (value) {
 							value.date = processDate(value.published);
 							return value;
 						});

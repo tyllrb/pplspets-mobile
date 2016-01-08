@@ -11,8 +11,7 @@ var NewPostTheme = StyleSheet.create({
 
 	container: {
 		padding: 15,
-		flex: 1,
-		marginTop: 60
+		flex: 1
 	},
 
 	info: {
@@ -24,15 +23,10 @@ var NewPostTheme = StyleSheet.create({
 		marginBottom: 10
 	},
 
-	landingImage: {
-		width: 110,
-		height: 110,
-		marginBottom: 30,
-		marginTop: 30
-	},
-
 	landingImageWrapper: {
-		alignItems: 'center'
+		alignItems: 'center',
+		marginTop: 30,
+		marginBottom: 30
 	},
 
 	input: {

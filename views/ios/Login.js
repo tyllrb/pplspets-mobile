@@ -37,6 +37,12 @@ class Login extends Component {
 	componentWillMount () {
 	}
 
+	/**********************************
+	**
+	**
+	** UGLY SO FUCKING UGLY GOD DAMN FIX THIS SHIT SOMEDAY WILL YOU
+	**
+	***********************************/
 	performLogin () {
 		console.log(this.state);
 

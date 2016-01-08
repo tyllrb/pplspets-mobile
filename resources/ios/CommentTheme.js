@@ -42,7 +42,7 @@ var CommentTheme = StyleSheet.create({
 
 	user: {
 		color: '#666666',
-		fontSize: 13,
+		fontSize: 14,
 		paddingTop: 5
 	},
 
@@ -62,8 +62,9 @@ var CommentTheme = StyleSheet.create({
 
 	date: {
 		marginTop: 5,
-		fontSize: 13,
-		color: '#999999'
+		fontSize: 12,
+		color: '#999999',
+		textAlign: 'right'
 	}
 });
 
